@@ -11,88 +11,100 @@ class RadioTest {
     public void shouldEmptyConstructor() {
         Radio radio = new Radio();
         assertEquals(10, radio.getCountStation());
-        assertEquals(9, radio.getMaxStation());
     }
 
     @Test
     public void shouldNextStation() {
-        Radio radio = new Radio(9, 50, 11, 10);
+        Radio radio = new Radio(12);
+        radio.setCurrentStation(11);
         radio.nextStation();
-        assertEquals(10, radio.getCurrentStation());
+        assertEquals(12, radio.getCurrentStation());
     }
 
     @Test
     public void shouldNextStationMax() {
-        Radio radio = new Radio(10, 50, 11, 10);
+        Radio radio = new Radio(12);
+        radio.setCurrentStation(12);
         radio.nextStation();
+        assertEquals(0, radio.getCurrentStation());
+    }
+
+    @Test
+    public void shouldNextStationNotLimitMax() {
+        Radio radio = new Radio(12);
+        radio.setCurrentStation(13);
         assertEquals(0, radio.getCurrentStation());
     }
 
 
     @Test
     public void shouldPrevStation() {
-        Radio radio = new Radio(1, 50, 11, 10);
+        Radio radio = new Radio(12);
+        radio.setCurrentStation(1);
         radio.previousStation();
         assertEquals(0, radio.getCurrentStation());
     }
 
     @Test
     public void shouldPrevStationMin() {
-        Radio radio = new Radio(0, 50, 11, 10);
+        Radio radio = new Radio(12);
+        radio.setCurrentStation(0);
         radio.previousStation();
-        assertEquals(10, radio.getCurrentStation());
+        assertEquals(11, radio.getCurrentStation());
+    }
+
+    @Test
+    public void shouldNextStationNotLimitMin() {
+        Radio radio = new Radio(12);
+        radio.setCurrentStation(-1);
+        assertEquals(0, radio.getCurrentStation());
     }
 
 
     @Test
     public void shouldNextVolume() {
-        Radio radio = new Radio(5, 99, 10, 12);
+        Radio radio = new Radio();
+        radio.setCurrentVolume(99);
         radio.nextVolume();
         assertEquals(100, radio.getCurrentVolume());
     }
 
     @Test
     public void shouldNextVolumeInLimit() {
-        Radio radio = new Radio(5, 100, 10, 12);
+        Radio radio = new Radio();
+        radio.setCurrentVolume(100);
         radio.nextVolume();
         assertEquals(100, radio.getCurrentVolume());
     }
 
     @Test
     public void shouldPrevVolume() {
-        Radio radio = new Radio(1, 1, 20, 25);
+        Radio radio = new Radio();
+        radio.setCurrentVolume(1);
         radio.previousVolume();
         assertEquals(0, radio.getCurrentVolume());
     }
 
     @Test
     public void shouldPrevVolumeInLimit() {
-        Radio radio = new Radio(1, 0, 20, 25);
+        Radio radio = new Radio();
+        radio.setCurrentVolume(0);
         radio.previousVolume();
         assertEquals(0, radio.getCurrentVolume());
     }
 
     @Test
-    public void shouldConstructor() {
-        Radio radio = new Radio(30, 0, 20, 25);
-        assertEquals(0, radio.getCurrentStation());
-    }
-
-    @Test
-    public void shouldConstructorMin() {
-        Radio radio = new Radio(-1, 0, 20, 25);
-        assertEquals(0, radio.getCurrentStation());
-    }
-
-    @Test
-    public void shouldVolume() {
-        Radio radio = new Radio(1, 101, 20, 25);
+    public void shouldNextVolumeNotLimitMax() {
+        Radio radio = new Radio();
+        radio.setCurrentVolume(101);
         assertEquals(0, radio.getCurrentVolume());
     }
 
     @Test
-    public void shouldMin() {
-        Radio radio = new Radio(1, -1, 20, 25);
+    public void shouldNextVolumeNotLimitMin() {
+        Radio radio = new Radio();
+        radio.setCurrentVolume(-1);
         assertEquals(0, radio.getCurrentVolume());
     }
+
 }
